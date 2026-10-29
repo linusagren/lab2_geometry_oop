@@ -19,6 +19,9 @@ class Circle(Shape):
             raise TypeError(f"Value must be float or int, not {type(value).__name__}.")
         self._radius = value
 
+    def is_unit_circle(self) -> bool:
+        return self.radius == 1
+
     @property
     def area(self):
         return pi * (self.radius**2)
@@ -27,5 +30,8 @@ class Circle(Shape):
     def perimeter(self):
         return 2 * pi * self.radius
 
-    def __repr__(self):
-        return f"Circle({self.radius})"
+    def __str__(self) -> str:
+        return f"A circle with the radius {self.radius} on position ({self.x}, {self.y})"
+
+    def __repr__(self) -> str:
+        return f"Circle({self.radius}, {self.x}, {self.y})"
