@@ -26,3 +26,6 @@ class Circle(Shape):
     @property
     def perimeter(self):
         return 2 * pi * self._radius
+
+    def __repr__(self):
+        return f"Circle({self.radius})"
