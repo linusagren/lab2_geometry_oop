@@ -8,6 +8,30 @@ class Rectangle(Shape):
         self.height = height
 
     @property
+    def width(self) -> float:
+        return self._width
+
+    @width.setter
+    def width(self, value: float) -> None:
+        if not isinstance(value, float | int) or isinstance(value, bool):
+            raise TypeError(f"Value must be float or int, not {type(value).__name__}.")
+        if value <= 0:
+            raise ValueError(f"Value must be bigger than 0, not {value}.")
+        self._width = value
+
+    @property
+    def height(self) -> float:
+        return self._height
+
+    @height.setter
+    def height(self, value: float) -> None:
+        if not isinstance(value, float | int) or isinstance(value, bool):
+            raise TypeError(f"Value must be float or int, not {type(value).__name__}.")
+        if value <= 0:
+            raise ValueError(f"Value must be bigger than 0, not {value}.")
+        self._height = value
+
+    @property
     def area(self) -> float:
         return self.width * self.height
 
