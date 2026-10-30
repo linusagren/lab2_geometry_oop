@@ -155,3 +155,39 @@ def test_dunder_eq():
     assert c1 != "..."
     assert c1 != 5
     assert c1 != True
+
+def test_dunder_lt():
+    c1 = Circle(5, 2, 1)
+    c2 = Circle(2, 1, 9)
+    c3 = Circle(2, 4, 9)
+
+    assert not c1 < c3
+    assert c2 < c1
+    assert not c2 < c3
+
+def test_dunder_gt():
+    c1 = Circle(5, 2, 1)
+    c2 = Circle(2, 1, 9)
+    c3 = Circle(2, 4, 9)
+
+    assert c1 > c2
+    assert not c2 > c1
+    assert not c2 > c3
+
+def test_dunder_ge():
+    c1 = Circle(5, 2, 1)
+    c2 = Circle(2, 1, 9)
+    c3 = Circle(2, 4, 9)
+
+    assert c1 >= c2
+    assert c2 >= c3
+    assert not c2 >= c1
+
+def test_dunder_le():
+    c1 = Circle(5, 2, 1)
+    c2 = Circle(2, 1, 9)
+    c3 = Circle(2, 4, 9)
+
+    assert not c1 <= c2
+    assert c2 <= c3
+    assert c2 <= c1
