@@ -144,3 +144,14 @@ def test_dunder_str():
 
     c1.radius = 1
     assert str(c1) == "A circle with the radius 1 on position (5, 6)"
+
+def test_dunder_eq():
+    c1 = Circle(5, 2, 1)
+    c2 = Circle(2, 1, 9)
+    c3 = Circle(2, 4, 9)
+
+    assert c1 != c2
+    assert c2 == c3
+    assert c1 != "..."
+    assert c1 != 5
+    assert c1 != True
