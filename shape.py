@@ -20,6 +20,30 @@ class Shape(ABC):
 
         return self.area == other.area
 
+    def __lt__(self, other) -> bool:
+        if not isinstance(other, Shape):
+            return NotImplemented
+
+        return self.area < other.area
+
+    def __gt__(self, other) -> bool:
+        if not isinstance(other, Shape):
+            return NotImplemented
+
+        return self.area > other.area
+
+    def __ge__(self, other) -> bool:
+        if not isinstance(other, Shape):
+            return NotImplemented
+
+        return self.area >= other.area
+
+    def __le__(self, other) -> bool:
+        if not isinstance(other, Shape):
+            return NotImplemented
+
+        return self.area <= other.area
+
 
     @property
     @abstractmethod
