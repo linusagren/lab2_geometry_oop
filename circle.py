@@ -13,10 +13,10 @@ class Circle(Shape):
 
     @radius.setter
     def radius(self, value: float) -> None:
-        if value <= 0:
-            raise ValueError(f"Value must be bigger than 0, not {value}.")
         if not isinstance(value, float | int) or isinstance(value, bool): # Safeguard against booleans as they are considered a subclass of int
             raise TypeError(f"Value must be float or int, not {type(value).__name__}.")
+        if value <= 0:
+            raise ValueError(f"Value must be bigger than 0, not {value}.")
         self._radius = value
 
     def is_unit_circle(self) -> bool:
