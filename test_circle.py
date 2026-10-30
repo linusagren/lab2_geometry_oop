@@ -107,10 +107,12 @@ def test_translate():
     c1.translate(-3, 2)
     assert c1.x == -3
     assert c1.y == 11
+    assert c1.radius == 5
 
     c1.translate(5, -15)
     assert c1.x == 2
     assert c1.y == -4
+    assert c1.radius == 5
 
 def test_unit_circle():
     c1 = Circle(5)
