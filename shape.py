@@ -2,7 +2,13 @@ from abc import ABC, abstractmethod
 from types import NotImplementedType
 
 class Shape(ABC):
+    """
+    Abstract superclass for shared properties and methods of subclasses.
+    """
     def __init__(self, x: float = 0, y: float = 0) -> None:
+        """
+        Validates the types for x, y and initializes them as attributes.
+        """
         if not isinstance(x, float | int) or isinstance(x, bool):
             raise TypeError(f"'x' must be int or float, not {type(x).__name__}.")
 
@@ -13,6 +19,11 @@ class Shape(ABC):
         self._y = y
 
     def __eq__(self, other) -> bool | NotImplementedType:
+        """
+        Compares the areas between two Shape objects of matching type. Returns False if the object types don't match.
+        
+        Unsupported object types return NotImplemented.
+        """
         if not isinstance(other, Shape):
             return NotImplemented
 
@@ -22,24 +33,36 @@ class Shape(ABC):
         return self.area == other.area
 
     def __lt__(self, other) -> bool | NotImplementedType:
+        """
+        Checks whether the area of a Shape object is less than another. Unsupported object types return NotImplemented.
+        """
         if not isinstance(other, Shape):
             return NotImplemented
 
         return self.area < other.area
 
     def __gt__(self, other) -> bool | NotImplementedType:
+        """
+        Checks whether the area of a Shape object is greater than another. Unsupported object types return NotImplemented.
+        """
         if not isinstance(other, Shape):
             return NotImplemented
 
         return self.area > other.area
 
     def __ge__(self, other) -> bool | NotImplementedType:
+        """
+        Checks whether the area of a Shape object is greater than or equal to another. Unsupported object types return NotImplemented.
+        """
         if not isinstance(other, Shape):
             return NotImplemented
 
         return self.area >= other.area
 
     def __le__(self, other) -> bool | NotImplementedType:
+        """
+        Checks whether the area of a Shape object is less than or equal to another. Unsupported object types return NotImplemented.
+        """
         if not isinstance(other, Shape):
             return NotImplemented
 
@@ -48,12 +71,18 @@ class Shape(ABC):
     @property
     @abstractmethod
     def area(self) -> float:
-        pass
+        """
+        Adds area as a requirement for subclasses.
+        """
+        ...
 
     @property
     @abstractmethod
     def perimeter(self) -> float:
-        pass
+        """
+        Adds perimeter as a requirement for subclasses.
+        """
+        ...
 
     @property
     def x(self) -> float:
@@ -70,6 +99,9 @@ class Shape(ABC):
         return self._y
 
     def translate(self, dx: float, dy: float) -> None:
+        """
+        Moves a shape based on its current position.
+        """
         if not isinstance(dx, int | float) or isinstance(dx, bool):
             raise TypeError(f"'dx' must be int or float, not {type(dx).__name__}.")
         
