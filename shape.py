@@ -44,7 +44,6 @@ class Shape(ABC):
 
         return self.area <= other.area
 
-
     @property
     @abstractmethod
     def area(self) -> float:
@@ -70,5 +69,11 @@ class Shape(ABC):
         return self._y
 
     def translate(self, dx: float, dy: float) -> None:
+        if not isinstance(dx, int | float) or isinstance(dx, bool):
+            raise TypeError(f"'dx' must be int or float, not {type(dx).__name__}.")
+        
+        if not isinstance(dy, int | float) or isinstance(dy, bool):
+            raise TypeError(f"'dy' must be int or float, not {type(dy).__name__}.")
+        
         self._x = self.x + dx
         self._y = self.y + dy
