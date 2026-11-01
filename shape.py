@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
+from types import NotImplementedType
 
 class Shape(ABC):
-    def __init__(self, x: float = 0, y: float = 0):
+    def __init__(self, x: float = 0, y: float = 0) -> None:
         if not isinstance(x, float | int) or isinstance(x, bool):
             raise TypeError(f"'x' must be int or float, not {type(x).__name__}.")
 
@@ -11,7 +12,7 @@ class Shape(ABC):
         self._x = x
         self._y = y
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other) -> bool | NotImplementedType:
         if not isinstance(other, Shape):
             return NotImplemented
 
@@ -20,25 +21,25 @@ class Shape(ABC):
 
         return self.area == other.area
 
-    def __lt__(self, other) -> bool:
+    def __lt__(self, other) -> bool | NotImplementedType:
         if not isinstance(other, Shape):
             return NotImplemented
 
         return self.area < other.area
 
-    def __gt__(self, other) -> bool:
+    def __gt__(self, other) -> bool | NotImplementedType:
         if not isinstance(other, Shape):
             return NotImplemented
 
         return self.area > other.area
 
-    def __ge__(self, other) -> bool:
+    def __ge__(self, other) -> bool | NotImplementedType:
         if not isinstance(other, Shape):
             return NotImplemented
 
         return self.area >= other.area
 
-    def __le__(self, other) -> bool:
+    def __le__(self, other) -> bool | NotImplementedType:
         if not isinstance(other, Shape):
             return NotImplemented
 
