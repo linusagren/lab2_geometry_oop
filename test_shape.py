@@ -22,3 +22,16 @@ def test_shape_comparisons():
     assert c2 != r2
     assert c2 >= r2
     assert c2 <= r2
+
+def test_invalid_translate():
+    c1 = Circle(5, 4, 1)
+    
+    with raises(TypeError):
+        c1.translate("...", 3)
+    assert c1.x == 4
+    assert c1.y == 1
+    
+    with raises(TypeError):
+        c1.translate(3, "...")
+    assert c1.x == 4
+    assert c1.y == 1
