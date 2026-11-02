@@ -1,12 +1,19 @@
-from pytest import raises, approx
+from pytest import raises
 from math import pi
 from shape import Shape
+from shape2d import Shape2D
 from circle import Circle
 from rectangle import Rectangle
 
 def test_abstraction():
-    with raises(TypeError, match=r"abstract class Shape"): # Match more specifically as a safeguard
-        s = Shape(1, 5)
+    with raises(TypeError, match=r"abstract class Shape2D"): # Match more specifically as a safeguard
+        Shape2D(1, 5)
+
+def test_valid_shape_init():
+    s1 = Shape(4, 7)
+
+    assert s1.x == 4
+    assert s1.y == 7
 
 def test_shape_comparisons():
     c1 = Circle(5)

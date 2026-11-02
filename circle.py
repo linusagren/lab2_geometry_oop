@@ -1,7 +1,7 @@
-from shape import Shape
+from shape2d import Shape2D
 from math import pi
 
-class Circle(Shape):
+class Circle(Shape2D):
     """
     Subclass of Shape for creating circles.
     """

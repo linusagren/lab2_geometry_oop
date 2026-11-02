@@ -1,6 +1,6 @@
-from shape import Shape
+from shape2d import Shape2D
 
-class Rectangle(Shape):
+class Rectangle(Shape2D):
     """
     Subclass of Shape for creating rectangles.
     """

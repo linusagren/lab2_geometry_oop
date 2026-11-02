@@ -1,5 +1,4 @@
-from abc import ABC, abstractmethod
-from types import NotImplementedType
+from abc import ABC
 
 class Shape(ABC):
     """
@@ -17,72 +16,6 @@ class Shape(ABC):
 
         self._x = x
         self._y = y
-
-    def __eq__(self, other) -> bool | NotImplementedType:
-        """
-        Compares the areas between two Shape objects of matching type. Returns False if the object types don't match.
-        
-        Unsupported object types return NotImplemented.
-        """
-        if not isinstance(other, Shape):
-            return NotImplemented
-
-        if type(self) is not type(other):
-            return False
-
-        return self.area == other.area
-
-    def __lt__(self, other) -> bool | NotImplementedType:
-        """
-        Checks whether the area of a Shape object is less than another. Unsupported object types return NotImplemented.
-        """
-        if not isinstance(other, Shape):
-            return NotImplemented
-
-        return self.area < other.area
-
-    def __gt__(self, other) -> bool | NotImplementedType:
-        """
-        Checks whether the area of a Shape object is greater than another. Unsupported object types return NotImplemented.
-        """
-        if not isinstance(other, Shape):
-            return NotImplemented
-
-        return self.area > other.area
-
-    def __ge__(self, other) -> bool | NotImplementedType:
-        """
-        Checks whether the area of a Shape object is greater than or equal to another. Unsupported object types return NotImplemented.
-        """
-        if not isinstance(other, Shape):
-            return NotImplemented
-
-        return self.area >= other.area
-
-    def __le__(self, other) -> bool | NotImplementedType:
-        """
-        Checks whether the area of a Shape object is less than or equal to another. Unsupported object types return NotImplemented.
-        """
-        if not isinstance(other, Shape):
-            return NotImplemented
-
-        return self.area <= other.area
-
-    @property
-    @abstractmethod
-    def area(self) -> float:
-        """
-        Adds area as a requirement for subclasses.
-        """
-        ...
-
-    @property
-    @abstractmethod
-    def perimeter(self) -> float:
-        """
-        Adds perimeter as a requirement for subclasses.
-        """
-        ...
 
     @property
     def x(self) -> float:
