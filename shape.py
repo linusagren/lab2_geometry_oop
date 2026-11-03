@@ -1,4 +1,5 @@
 from abc import ABC
+from utils import validate_number_type
 
 class Shape(ABC):
     """
@@ -8,11 +9,8 @@ class Shape(ABC):
         """
         Validates the types for x, y and initializes them as attributes.
         """
-        if not isinstance(x, float | int) or isinstance(x, bool):
-            raise TypeError(f"'x' must be int or float, not {type(x).__name__}.")
-
-        if not isinstance(y, float | int) or isinstance(y, bool):
-            raise TypeError(f"'y' must be int or float, not {type(y).__name__}.")
+        x = validate_number_type(x)
+        y = validate_number_type(y)
 
         self._x = x
         self._y = y
@@ -35,11 +33,8 @@ class Shape(ABC):
         """
         Moves a shape based on its current position.
         """
-        if not isinstance(dx, int | float) or isinstance(dx, bool):
-            raise TypeError(f"'dx' must be int or float, not {type(dx).__name__}.")
-        
-        if not isinstance(dy, int | float) or isinstance(dy, bool):
-            raise TypeError(f"'dy' must be int or float, not {type(dy).__name__}.")
-        
+        dx = validate_number_type(dx)
+        dy = validate_number_type(dy)
+                
         self._x = self.x + dx
         self._y = self.y + dy

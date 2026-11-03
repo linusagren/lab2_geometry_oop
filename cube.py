@@ -1,4 +1,5 @@
 from shape3d import Shape3D
+import utils
 
 class Cube(Shape3D):
     def __init__(self, edge_length: float, x: float = 0, y: float = 0, z: float = 0) -> None:
@@ -12,10 +13,7 @@ class Cube(Shape3D):
 
     @edge_length.setter
     def edge_length(self, value: float) -> None:
-        if not isinstance(value, int | float) or isinstance(value, bool):
-            raise TypeError(f"Value must be float or int, not {type(value).__name__}.")
-        if value <= 0:
-            raise ValueError(f"Value must be bigger than 0, not {value}.")
+        value = utils.validate_positive_number(value)
         self._edge_length = value
 
     @property

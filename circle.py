@@ -1,5 +1,6 @@
 from shape2d import Shape2D
 from math import pi
+from utils import validate_positive_number
 
 class Circle(Shape2D):
     """
@@ -29,10 +30,7 @@ class Circle(Shape2D):
 
         Invalid types raise TypeError. Negative or zero-values raise ValueError.
         """
-        if not isinstance(value, float | int) or isinstance(value, bool): # Safeguard against booleans as they are considered a subclass of int
-            raise TypeError(f"Value must be float or int, not {type(value).__name__}.")
-        if value <= 0:
-            raise ValueError(f"Value must be bigger than 0, not {value}.")
+        value = validate_positive_number(value)
         self._radius = value
 
     def is_unit_circle(self) -> bool:

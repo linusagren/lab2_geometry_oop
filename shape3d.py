@@ -1,12 +1,12 @@
-from shape import Shape
 from abc import abstractmethod
+from shape import Shape
+from utils import validate_number_type
 
 class Shape3D(Shape):
     def __init__(self, x: float = 0, y: float = 0, z: float = 0) -> None:
         super().__init__(x, y)
 
-        if not isinstance(z, float | int) or isinstance(z, bool):
-            raise TypeError(f"'z' must be int or float, not {type(z).__name__}.")
+        z = validate_number_type(z)
 
         self._z = z
 
@@ -25,8 +25,7 @@ class Shape3D(Shape):
         ...
 
     def translate(self, dx: float, dy: float, dz: float = 0) -> None:
-        if not isinstance(dz, int | float) or isinstance(dz, bool):
-            raise TypeError(f"'dz' must be int or float, not {type(dz).__name__}.")
+        dz = validate_number_type(dz)
         
         super().translate(dx, dy)
         self._z = self.z + dz
