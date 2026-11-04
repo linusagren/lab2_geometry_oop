@@ -60,6 +60,42 @@ def test_volume():
     c1.edge_length = 15
     assert c1.volume == 3375
 
+def test_dunder_eq():
+    c1 = Cube(5, 3, 1, 5)
+    c2 = Cube(5, 1, 0, -5)
+
+    assert c1.volume == c2.volume
+
+def test_dunder_lt():
+    c1 = Cube(5, 3, 1, 5)
+    c2 = Cube(6, 1, 0, -5)
+
+    assert c1.volume < c2.volume
+
+def test_dunder_gt():
+    c1 = Cube(6, 3, 1, 5)
+    c2 = Cube(5, 1, 0, -5)
+
+    assert c1.volume > c2.volume
+
+def test_dunder_ge():
+    c1 = Cube(6)
+    c2 = Cube(5)
+    c3 = Cube(5)
+
+    assert c1.volume >= c2.volume
+    assert c1.volume >= c3.volume
+    assert not c3.volume >= c1.volume
+
+def test_dunder_le():
+    c1 = Cube(2)
+    c2 = Cube(5)
+    c3 = Cube(5)
+
+    assert c1.volume <= c2.volume
+    assert c2.volume <= c3.volume
+    assert not c3.volume <= c1.volume
+
 def test_dunder_str():
     c1 = Cube(5, 3, 1, 5)
     assert str(c1) == "A cube with an edge length of 5 on position (3, 1, 5)."
