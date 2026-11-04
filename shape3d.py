@@ -31,7 +31,7 @@ class Shape3D(Shape):
         super().translate(dx, dy)
         self._z = self.z + dz
 
-    def __eq__(self, other) -> bool | NotImplementedType:
+    def __eq__(self, other: Shape) -> bool | NotImplementedType:
         """
         Compares the volume between two Shape3D objects of matching type. Returns False if the object types don't match.
         
@@ -45,36 +45,36 @@ class Shape3D(Shape):
 
         return self.volume == other.volume
 
-    def __lt__(self, other) -> bool | NotImplementedType:
+    def __lt__(self, other: Shape) -> bool | NotImplementedType:
         """
-        Checks whether the volume of a Shape3D object is less than another. Unsupported object types return NotImplemented.
+        Checks whether the volume of a Shape3D object is less than another Shape object. Unsupported object types return NotImplemented.
         """
         if not isinstance(other, Shape3D):
             return NotImplemented
 
         return self.volume < other.volume
 
-    def __gt__(self, other) -> bool | NotImplementedType:
+    def __gt__(self, other: Shape) -> bool | NotImplementedType:
         """
-        Checks whether the volume of a Shape3D object is greater than another. Unsupported object types return NotImplemented.
+        Checks whether the volume of a Shape3D object is greater than another Shape object. Unsupported object types return NotImplemented.
         """
         if not isinstance(other, Shape3D):
             return NotImplemented
 
         return self.volume > other.volume
 
-    def __ge__(self, other) -> bool | NotImplementedType:
+    def __ge__(self, other: Shape) -> bool | NotImplementedType:
         """
-        Checks whether the volume of a Shape3D object is greater than or equal to another. Unsupported object types return NotImplemented.
+        Checks whether the volume of a Shape3D object is greater than or equal to another Shape object. Unsupported object types return NotImplemented.
         """
         if not isinstance(other, Shape3D):
             return NotImplemented
 
         return self.volume >= other.volume
 
-    def __le__(self, other) -> bool | NotImplementedType:
+    def __le__(self, other: Shape) -> bool | NotImplementedType:
         """
-        Checks whether the volume of a Shape3D object is less than or equal to another. Unsupported object types return NotImplemented.
+        Checks whether the volume of a Shape3D object is less than or equal to another Shape object. Unsupported object types return NotImplemented.
         """
         if not isinstance(other, Shape3D):
             return NotImplemented
