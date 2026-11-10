@@ -1,11 +1,18 @@
 from rectangle import Rectangle
-from pytest import raises, approx
+from pytest import raises, fixture
+from pytest import mark
 
-def test_valid_init():
-    r1 = Rectangle(2, 4)
+@fixture
+def rectangle():
+    return Rectangle(5, 2)
 
-    assert r1.width == 2
-    assert r1.height == 4
+def test_valid_init(rectangle):
+    r1 = rectangle
+
+    assert r1.width == 5
+    assert r1.height == 2
+    assert r1.x == 0
+    assert r1.y == 0
 
 def test_invalid_zero():
     with raises(ValueError):
@@ -40,8 +47,8 @@ def test_valid_float():
     assert r1.width == 2.34
     assert r1.height == 1.95
 
-def test_read_only_assignment():
-    r1 = Rectangle(4, 6)
+def test_read_only_assignment(rectangle):
+    r1 = rectangle
     
     with raises(AttributeError):
         r1.x = 4
@@ -49,43 +56,25 @@ def test_read_only_assignment():
     with raises(AttributeError):
         r1.y = 2
 
-def test_invalid_dimension_assignment():
-    r1 = Rectangle(2, 9)
+@mark.parametrize("width, height, expected", [
+    (0, 0, ValueError),
+    ("...", "...", TypeError),
+    (True, False, TypeError)
+])
+def test_invalid_dimension_assignment(rectangle, width, height, expected):
+    r1 = rectangle
+    
+    with raises(expected):
+        r1.width = width
+    assert r1.width == 5
 
-    with raises(ValueError):
-        r1.width = 0
-    assert r1.width == 2
+    with raises(expected):
+        r1.height = height
+    assert r1.height == 2
 
-    with raises(ValueError):
-        r1.height = 0
-    assert r1.height == 9
+def test_valid_dimension_assignment(rectangle):
+    r1 = rectangle
 
-    with raises(ValueError):
-        r1.width = -3
-    assert r1.width == 2
-
-    with raises(ValueError):
-        r1.height = -2
-    assert r1.height == 9
-
-    with raises(TypeError):
-        r1.width = "5"
-    assert r1.width == 2
-
-    with raises(TypeError):
-        r1.height = "4"
-    assert r1.height == 9
-
-    with raises(TypeError):
-        r1.width = True
-    assert r1.width == 2
-
-    with raises(TypeError):
-        r1.height = False
-    assert r1.height == 9
-
-def test_valid_dimension_assignment():
-    r1 = Rectangle(5, 2)
     r1.width = 3
     assert r1.width == 3
 
@@ -98,48 +87,35 @@ def test_valid_dimension_assignment():
     r1.height = 5.24
     assert r1.height == 5.24
 
-def test_valid_init_coordinates():
-    r1 = Rectangle(2, 4, 8, 5)
-    r2 = Rectangle(2, 4, -8, 4)
-    r3 = Rectangle(2, 4, 4, -8)
-    r4 = Rectangle(2, 4, 4.21, -8.23)
-    r5 = Rectangle(2, 4)
+@mark.parametrize("x, y", [
+    (8, 5),
+    (-8, 4),
+    (4, -8),
+    (4.21, -8.23),
+])
+def test_valid_init_coordinates(x, y):
+    r1 = Rectangle(2, 4, x, y)
 
-    assert r1.x == 8
-    assert r1.y == 5
+    assert r1.x == x
+    assert r1.y == y
 
-    assert r2.x == -8
-    assert r2.y == 4
-
-    assert r3.x == 4
-    assert r3.y == -8
-
-    assert r4.x == 4.21
-    assert r4.y == -8.23
-
-    assert r5.x == 0
-    assert r5.y == 0
-
-def test_invalid_init_coordinates():
+@mark.parametrize("x, y", [
+    (True, True),
+    ("...", "..."),
+])
+def test_invalid_init_coordinates(x, y):
     with raises(TypeError):
-        Rectangle(2, 4, True, -8)
-    
+        Rectangle(2, 4, x, 3)
     with raises(TypeError):
-        Rectangle(2, 4, 4, False)
+        Rectangle(2, 4, 3, y)
 
-    with raises(TypeError):
-        Rectangle(2, 4, "...", 4)
+def test_area(rectangle):
+    r1 = rectangle
+    assert r1.area == 10
 
-    with raises(TypeError):
-        Rectangle(2, 4, 5, "...")
-
-def test_area():
-    r1 = Rectangle(4, 6)
-    assert r1.area == 24
-
-def test_perimeter():
-    r1 = Rectangle(4, 6)
-    assert r1.perimeter == 20
+def test_perimeter(rectangle):
+    r1 = rectangle
+    assert r1.perimeter == 14
 
 def test_translate():
     r1 = Rectangle(4, 6, 5, 8)
