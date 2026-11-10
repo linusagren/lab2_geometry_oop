@@ -6,6 +6,10 @@ from pytest import mark
 def rectangle():
     return Rectangle(5, 2)
 
+@fixture
+def square():
+    return Rectangle(7, 7)
+
 def test_valid_init(rectangle):
     r1 = rectangle
 
@@ -141,6 +145,48 @@ def test_is_square():
 
     r2.width = 4
     assert r2.is_square()
+
+def test_dunder_eq(rectangle, square):
+    r1 = rectangle
+    sq1 = square
+
+    assert r1 != sq1
+    assert sq1 == Rectangle(7, 7, 5, 9)
+    assert r1 != "..."
+    assert r1 != 5
+    assert r1 != True
+
+def test_dunder_lt(rectangle, square):
+    r1 = rectangle
+    sq1 = square
+
+    assert r1 < sq1
+    assert not sq1 < r1
+    assert not r1 < Rectangle(5, 2)
+
+def test_dunder_gt(rectangle, square):
+    r1 = rectangle
+    sq1 = square
+
+    assert not r1 > sq1
+    assert sq1 > r1
+    assert not r1 > Rectangle(5, 2)
+
+def test_dunder_ge(rectangle, square):
+    r1 = rectangle
+    sq1 = square
+
+    assert not r1 >= sq1
+    assert sq1 >= r1
+    assert r1 >= Rectangle(5, 2)
+
+def test_dunder_le(rectangle, square):
+    r1 = rectangle
+    sq1 = square
+
+    assert r1 <= sq1
+    assert not sq1 <= r1
+    assert r1 <= Rectangle(5, 2)
 
 def test_dunder_repr():
     r1 = Rectangle(4, 2, 0, 3)
