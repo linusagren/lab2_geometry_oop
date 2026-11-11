@@ -11,12 +11,10 @@ def square():
     return Rectangle(7, 7)
 
 def test_valid_init(rectangle):
-    r1 = rectangle
-
-    assert r1.width == 5
-    assert r1.height == 2
-    assert r1.x == 0
-    assert r1.y == 0
+    assert rectangle.width == 5
+    assert rectangle.height == 2
+    assert rectangle.x == 0
+    assert rectangle.y == 0
 
 def test_invalid_zero():
     with raises(ValueError):
@@ -52,13 +50,11 @@ def test_valid_float():
     assert r1.height == 1.95
 
 def test_read_only_assignment(rectangle):
-    r1 = rectangle
-    
     with raises(AttributeError):
-        r1.x = 4
+        rectangle.x = 4
 
     with raises(AttributeError):
-        r1.y = 2
+        rectangle.y = 2
 
 @mark.parametrize("width, height, expected", [
     (0, 0, ValueError),
@@ -66,30 +62,26 @@ def test_read_only_assignment(rectangle):
     (True, False, TypeError)
 ])
 def test_invalid_dimension_assignment(rectangle, width, height, expected):
-    r1 = rectangle
-    
     with raises(expected):
-        r1.width = width
-    assert r1.width == 5
+        rectangle.width = width
+    assert rectangle.width == 5
 
     with raises(expected):
-        r1.height = height
-    assert r1.height == 2
+        rectangle.height = height
+    assert rectangle.height == 2
 
 def test_valid_dimension_assignment(rectangle):
-    r1 = rectangle
+    rectangle.width = 3
+    assert rectangle.width == 3
 
-    r1.width = 3
-    assert r1.width == 3
-
-    r1.width = 7.21
-    assert r1.width == 7.21
+    rectangle.width = 7.21
+    assert rectangle.width == 7.21
     
-    r1.height = 8
-    assert r1.height == 8
+    rectangle.height = 8
+    assert rectangle.height == 8
 
-    r1.height = 5.24
-    assert r1.height == 5.24
+    rectangle.height = 5.24
+    assert rectangle.height == 5.24
 
 @mark.parametrize("x, y", [
     (8, 5),
@@ -104,22 +96,20 @@ def test_valid_init_coordinates(x, y):
     assert r1.y == y
 
 @mark.parametrize("x, y", [
-    (True, True),
-    ("...", "..."),
+    (True, 5),
+    (5, True),
+    ("...", 5),
+    (5, "..."),
 ])
 def test_invalid_init_coordinates(x, y):
     with raises(TypeError):
-        Rectangle(2, 4, x, 3)
-    with raises(TypeError):
-        Rectangle(2, 4, 3, y)
+        Rectangle(2, 4, x, y)
 
 def test_area(rectangle):
-    r1 = rectangle
-    assert r1.area == 10
+    assert rectangle.area == 10
 
 def test_perimeter(rectangle):
-    r1 = rectangle
-    assert r1.perimeter == 14
+    assert rectangle.perimeter == 14
 
 def test_translate():
     r1 = Rectangle(4, 6, 5, 8)
@@ -147,46 +137,31 @@ def test_is_square():
     assert r2.is_square()
 
 def test_dunder_eq(rectangle, square):
-    r1 = rectangle
-    sq1 = square
-
-    assert r1 != sq1
-    assert sq1 == Rectangle(7, 7, 5, 9)
-    assert r1 != "..."
-    assert r1 != 5
-    assert r1 != True
+    assert rectangle != square
+    assert square == Rectangle(7, 7, 5, 9)
+    assert rectangle != "..."
+    assert rectangle != 5
+    assert rectangle != True
 
 def test_dunder_lt(rectangle, square):
-    r1 = rectangle
-    sq1 = square
-
-    assert r1 < sq1
-    assert not sq1 < r1
-    assert not r1 < Rectangle(5, 2)
+    assert rectangle < square
+    assert not square < rectangle
+    assert not rectangle < Rectangle(5, 2)
 
 def test_dunder_gt(rectangle, square):
-    r1 = rectangle
-    sq1 = square
-
-    assert not r1 > sq1
-    assert sq1 > r1
-    assert not r1 > Rectangle(5, 2)
+    assert not rectangle > square
+    assert square > rectangle
+    assert not rectangle > Rectangle(5, 2)
 
 def test_dunder_ge(rectangle, square):
-    r1 = rectangle
-    sq1 = square
-
-    assert not r1 >= sq1
-    assert sq1 >= r1
-    assert r1 >= Rectangle(5, 2)
+    assert not rectangle >= square
+    assert square >= rectangle
+    assert rectangle >= Rectangle(5, 2)
 
 def test_dunder_le(rectangle, square):
-    r1 = rectangle
-    sq1 = square
-
-    assert r1 <= sq1
-    assert not sq1 <= r1
-    assert r1 <= Rectangle(5, 2)
+    assert rectangle <= square
+    assert not square <= rectangle
+    assert rectangle <= Rectangle(5, 2)
 
 def test_dunder_repr():
     r1 = Rectangle(4, 2, 0, 3)
