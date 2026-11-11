@@ -10,17 +10,19 @@ def circle():
 def circle_trio():
     return Circle(5, 2, 1), Circle(2, 1, 9), Circle(2, 4, 9)
 
-def test_valid_init(circle):
-    assert circle.radius == 5
-    assert circle.x == 0
-    assert circle.y == 0
+def test_valid_init():
+    c1 = Circle(5)
+    
+    assert c1.radius == 5
+    assert c1.x == 0
+    assert c1.y == 0
 
-@mark.parametrize("x, y", {
+@mark.parametrize("x, y", [
     (1, 3),
     (0, 0),
     (-2, -5),
     (5.23, -5.12)
-})
+])
 def test_valid_init_coordinates(x, y):
     assert Circle(5, x, y)
 
@@ -59,9 +61,11 @@ def test_valid_float_init():
 def test_invalid_coordinate_assignment(circle):
     with raises(AttributeError):
         circle.x = 5
+    assert circle.x == 0
 
     with raises(AttributeError):
         circle.y = 2
+    assert circle.y == 0
 
 @mark.parametrize("radius, expected", [
     (0, ValueError),
@@ -162,7 +166,7 @@ def test_dunder_ge(circle_trio):
 
 def test_dunder_le(circle_trio):
     c1, c2, c3 = circle_trio
-    
+
     assert not c1 <= c2
     assert c2 <= c3
     assert c2 <= c1
