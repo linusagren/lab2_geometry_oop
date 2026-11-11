@@ -1,100 +1,163 @@
-from pytest import raises
+from pytest import raises, fixture, mark
 from cube import Cube
 
+@fixture
+def cube():
+    return Cube(5, 3, 1, 5)
+
+@fixture
+def cube_trio():
+    return Cube(5, 3, 1, 5), Cube(5, 1, 0, -5), Cube(2, 1, 0, -5)
+
 def test_valid_init():
-    assert Cube(5)
+    c1 = Cube(5)
 
-def test_invalid_init():
-    with raises(TypeError):
-        Cube("...")
+    assert c1.edge_length == 5
+    assert c1.x == 0
+    assert c1.y == 0
 
-    with raises(TypeError):
-        Cube(True)
+@mark.parametrize("x, y, z", [
+    (1, 3, 4),
+    (0, 0, 0),
+    (-2, -5, -6),
+    (5.23, -5.12, 3.27)
+])
+def test_valid_init_coordinates(x, y, z):
+    assert Cube(5, x, y, z)
 
+
+def test_valid_edge_length_assignment(cube):
+    cube.edge_length = 3
+    assert cube.edge_length == 3
+    assert cube.x == 3
+    assert cube.y == 1
+    assert cube.z == 5
+
+    cube.edge_length = 5.21
+    assert cube.edge_length == 5.21
+    assert cube.x == 3
+    assert cube.y == 1
+    assert cube.z == 5
+
+def test_surface_area(cube):
+    assert cube.surface_area == 150
+
+    cube.edge_length = 12
+    assert cube.surface_area == 864
+
+def test_volume(cube):
+    assert cube.volume == 125
+
+    cube.edge_length = 15
+    assert cube.volume == 3375
+
+def test_valid_translate(cube): #3, 1, 5
+    cube.translate(-3, 2, 6)
+    assert cube.x == 0
+    assert cube.y == 3
+    assert cube.z == 11
+    assert cube.edge_length == 5
+
+    cube.translate(5.3, -15.4, -4.5)
+    assert cube.x == 5.3
+    assert cube.y == -12.4
+    assert cube.z == 6.5
+    assert cube.edge_length == 5
+
+def test_invalid_zero_init():
     with raises(ValueError):
         Cube(0)
+
+def test_invalid_negative_init():
     with raises(ValueError):
         Cube(-5)
 
-def test_valid_side_length_assignment():
-    c1 = Cube(5, 3, 1, 5)
+def test_invalid_string_init():
+    with raises(TypeError):
+        Cube("...")
 
-    c1.edge_length = 3
-    assert c1.edge_length == 3
-    assert c1.x == 3
-    assert c1.y == 1
-    assert c1.z == 5
+def test_invalid_boolean_init():
+    with raises(TypeError):
+        Cube(True)
 
-    c1.edge_length += 2
-    assert c1.edge_length == 5
-    assert c1.x == 3
-    assert c1.y == 1
-    assert c1.z == 5
+def test_invalid_coordinate_assignment(cube):
+    with raises(AttributeError):
+        cube.x = 5
+    assert cube.x == 3
 
-def test_invalid_side_length_assignment():
-    c1 = Cube(5, 3, 1, 5)
+    with raises(AttributeError):
+        cube.y = 5
+    assert cube.y == 1
 
-    with raises(ValueError):
-        c1.edge_length = 0
-    assert c1.x == 3
-    assert c1.y == 1
-    assert c1.z == 5
-    
-    with raises(ValueError):
-        c1.edge_length = -4
-    assert c1.x == 3
-    assert c1.y == 1
-    assert c1.z == 5
+    with raises(AttributeError):
+        cube.z = 2
+    assert cube.z == 5
 
-def test_surface_area():
-    c1 = Cube(5, 3, 1, 5)
-    assert c1.surface_area == 150
+@mark.parametrize("edge_length, expected", [
+    (0, ValueError),
+    (-5, ValueError),
+    ("2", TypeError),
+    (True, TypeError)
+])
+def test_invalid_edge_length_assignment(cube, edge_length, expected):
+    with raises(expected):
+        cube.edge_length = edge_length
+    assert cube.edge_length == 5
+    assert cube.x == 3
+    assert cube.y == 1
+    assert cube.z == 5
 
-    c1.edge_length = 12
-    assert c1.surface_area == 864
+@mark.parametrize("x, y, z", [
+    ("...", 4, 1),
+    (1, "...", 1),
+    (1, 4, "..."),
+    (True, 4, 5),
+    (1, True, 5),
+    (1, 4, True),
+])
+def test_invalid_translate(cube, x, y, z):
+    with raises(TypeError):
+        cube.translate(x, y, z)
+    assert cube.x == 3
+    assert cube.y == 1
+    assert cube.z == 5
 
-def test_volume():
-    c1 = Cube(5, 3, 1, 5)
-    assert c1.volume == 125
+def test_dunder_eq(cube_trio): #5, 5, 2
+    c1, c2, c3 = cube_trio
 
-    c1.edge_length = 15
-    assert c1.volume == 3375
+    assert c1 == c2
+    assert c1 != c3
+    assert c1 != "..."
+    assert c1 != 5
+    assert c1 != True
 
-def test_dunder_eq():
-    c1 = Cube(5, 3, 1, 5)
-    c2 = Cube(5, 1, 0, -5)
+def test_dunder_lt(cube_trio):
+    c1, c2, c3 = cube_trio
 
-    assert c1.volume == c2.volume
+    assert not c1 < c3
+    assert c3 < c1
+    assert not c1 < c2
 
-def test_dunder_lt():
-    c1 = Cube(5, 3, 1, 5)
-    c2 = Cube(6, 1, 0, -5)
+def test_dunder_gt(cube_trio):
+    c1, c2, c3 = cube_trio
 
-    assert c1.volume < c2.volume
+    assert c1 > c3
+    assert not c3 > c1
+    assert not c1 > c2
 
-def test_dunder_gt():
-    c1 = Cube(6, 3, 1, 5)
-    c2 = Cube(5, 1, 0, -5)
+def test_dunder_ge(cube_trio):
+    c1, c2, c3 = cube_trio
 
-    assert c1.volume > c2.volume
+    assert c1 >= c3
+    assert not c3 >= c1
+    assert c1 >= c2
 
-def test_dunder_ge():
-    c1 = Cube(6)
-    c2 = Cube(5)
-    c3 = Cube(5)
+def test_dunder_le(cube_trio):
+    c1, c2, c3 = cube_trio
 
-    assert c1.volume >= c2.volume
-    assert c1.volume >= c3.volume
-    assert not c3.volume >= c1.volume
-
-def test_dunder_le():
-    c1 = Cube(2)
-    c2 = Cube(5)
-    c3 = Cube(5)
-
-    assert c1.volume <= c2.volume
-    assert c2.volume <= c3.volume
-    assert not c3.volume <= c1.volume
+    assert not c1 <= c3
+    assert c3 <= c1
+    assert c1 <= c2
 
 def test_dunder_str():
     c1 = Cube(5, 3, 1, 5)
