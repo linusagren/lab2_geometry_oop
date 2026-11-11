@@ -91,16 +91,28 @@ def test_area(circle):
 def test_perimeter(circle):
     assert circle.perimeter == approx(31.4159)
 
-def test_translate(circle):
+def test_valid_translate(circle):
     circle.translate(-3, 2)
     assert circle.x == -3
     assert circle.y == 2
     assert circle.radius == 5
 
-    circle.translate(5, -15)
-    assert circle.x == 2
-    assert circle.y == -13
+    circle.translate(5.23, -15.02)
+    assert circle.x == approx(2.23)
+    assert circle.y == approx(-13.02)
     assert circle.radius == 5
+
+@mark.parametrize("x, y", [
+    ("...", 4,),
+    (1, "..."),
+    (True, 4),
+    (1, True)
+])
+def test_invalid_translate(circle, x, y):
+    with raises(TypeError):
+        circle.translate(x, y)
+    assert circle.x == 0
+    assert circle.y == 0
 
 def test_unit_circle(circle):
     assert circle.is_unit_circle() == False
