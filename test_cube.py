@@ -15,6 +15,7 @@ def test_valid_init():
     assert c1.edge_length == 5
     assert c1.x == 0
     assert c1.y == 0
+    assert c1.z == 0
 
 @mark.parametrize("x, y, z", [
     (1, 3, 4),
@@ -23,8 +24,12 @@ def test_valid_init():
     (5.23, -5.12, 3.27)
 ])
 def test_valid_init_coordinates(x, y, z):
-    assert Cube(5, x, y, z)
+    c1 = Cube(5, x, y, z)
 
+    assert c1.edge_length == 5
+    assert c1.x == x
+    assert c1.y == y
+    assert c1.z == z
 
 def test_valid_edge_length_assignment(cube):
     cube.edge_length = 3
@@ -51,6 +56,14 @@ def test_volume(cube):
     cube.edge_length = 15
     assert cube.volume == 3375
 
+def test_invalid_surface_area_assignment(cube):
+    with raises(AttributeError):
+        cube.surface_area = 5
+
+def test_invalid_volume_assignment(cube):
+    with raises(AttributeError):
+        cube.volume = 50
+
 def test_valid_translate(cube): #3, 1, 5
     cube.translate(-3, 2, 6)
     assert cube.x == 0
@@ -58,10 +71,10 @@ def test_valid_translate(cube): #3, 1, 5
     assert cube.z == 11
     assert cube.edge_length == 5
 
-    cube.translate(5.3, -15.4, -4.5)
+    cube.translate(5.3, -15.4)
     assert cube.x == 5.3
     assert cube.y == -12.4
-    assert cube.z == 6.5
+    assert cube.z == 11
     assert cube.edge_length == 5
 
 def test_invalid_zero_init():
@@ -79,6 +92,17 @@ def test_invalid_string_init():
 def test_invalid_boolean_init():
     with raises(TypeError):
         Cube(True)
+
+@mark.parametrize("value", [
+    "2", True
+])
+def test_invalid_coordinate_init(value):
+    with raises(TypeError):
+        Cube(5, value, 0, 0)
+    with raises(TypeError):
+        Cube(5, 0, value, 0)
+    with raises(TypeError):
+        Cube(5, 0, 0, value)
 
 def test_invalid_coordinate_assignment(cube):
     with raises(AttributeError):
