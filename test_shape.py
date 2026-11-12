@@ -1,44 +1,42 @@
-from pytest import raises
-from math import pi
+from pytest import fixture, mark, raises
 from shape import Shape
-from shape2d import Shape2D
-from circle import Circle
-from rectangle import Rectangle
 
-def test_abstraction():
-    with raises(TypeError, match=r"abstract class Shape2D"): # Match more specifically as a safeguard
-        Shape2D(1, 5)
+@fixture
+def shape():
+    return Shape(4, 7)
 
-def test_valid_shape_init():
-    s1 = Shape(4, 7)
+def test_valid_shape_init(shape):
+    shape_2 = Shape()
 
-    assert s1.x == 4
-    assert s1.y == 7
+    assert shape.x == 4
+    assert shape.y == 7
+    assert shape_2.x == 0
+    assert shape_2.y == 0
 
-def test_shape_comparisons():
-    c1 = Circle(5)
-    r1 = Rectangle(2, 4)
-
-    assert not r1 == c1
-    assert r1 < c1
-    assert not r1 > c1
-
-    c2 = Circle(2)
-    r2 = Rectangle(4, pi)
-
-    assert c2 != r2
-    assert c2 >= r2
-    assert c2 <= r2
-
-def test_invalid_translate():
-    c1 = Circle(5, 4, 1)
-    
+@mark.parametrize("x, y", [
+    (True, 5),
+    (5, True),
+    ("...", 5),
+    (5, "..."),
+])
+def test_invalid_shape_init_coordinates(x, y):
     with raises(TypeError):
-        c1.translate("...", 3)
-    assert c1.x == 4
-    assert c1.y == 1
-    
-    with raises(TypeError):
-        c1.translate(3, "...")
-    assert c1.x == 4
-    assert c1.y == 1
+        Shape(x, y)
+
+def test_read_only_assignment(shape):
+    with raises(AttributeError):
+        shape.x = 3
+    assert shape.x == 4
+
+    with raises(AttributeError):
+        shape.y = 2
+    assert shape.y == 7
+
+def test_translate(shape):
+    shape.translate(-6, 3)
+    assert shape.x == -2
+    assert shape.y == 10
+
+    shape.translate(2, -14)
+    assert shape.x == 0
+    assert shape.y == -4
