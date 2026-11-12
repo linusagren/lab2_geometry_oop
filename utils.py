@@ -22,6 +22,9 @@ def validate_positive_number(value: Any) -> int | float:
     value = validate_number_type(value)
     if value <= 0:
         raise ValueError(f"Value must be bigger than 0, not {value}.")
+    if value != value: # Rare NaN edge-case
+        raise ValueError(f"Value cannot be NaN.")
+    
     return value
 
 def validate_number(value: Any) -> int | float:
