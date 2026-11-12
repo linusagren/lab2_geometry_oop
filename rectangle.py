@@ -1,5 +1,5 @@
 from shape2d import Shape2D
-from utils import validate_number
+from utils import validate_positive_number
 
 class Rectangle(Shape2D):
     """
@@ -30,7 +30,7 @@ class Rectangle(Shape2D):
 
         Invalid types raise TypeError. Negative or zero-values raise ValueError.
         """
-        value = validate_number(value)
+        value = validate_positive_number(value)
         self._width = value
 
     @property
@@ -47,7 +47,7 @@ class Rectangle(Shape2D):
 
         Invalid types raise TypeError. Negative or zero-values raise ValueError.
         """
-        value = validate_number(value)
+        value = validate_positive_number(value)
         self._height = value
 
     @property

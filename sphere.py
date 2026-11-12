@@ -1,6 +1,6 @@
 from math import pi
 from shape3d import Shape3D
-from utils import validate_number
+from utils import validate_positive_number
 
 class Sphere(Shape3D):
     def __init__(self, radius: float, x: float = 0, y: float = 0, z: float = 0) -> None:
@@ -14,7 +14,7 @@ class Sphere(Shape3D):
 
     @radius.setter
     def radius(self, value: float) -> None:
-        value = validate_number(value)
+        value = validate_positive_number(value)
         self._radius = value
 
     @property

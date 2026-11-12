@@ -26,11 +26,3 @@ def validate_positive_number(value: Any) -> int | float:
         raise ValueError("Value cannot be NaN.")
     
     return value
-
-def validate_number(value: Any) -> int | float:
-    """
-    Returns value if greater than 0 and of type int or float.
-    """
-    value = validate_positive_number(value)
-    value = validate_number_type(value)
-    return value
