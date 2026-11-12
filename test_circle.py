@@ -24,7 +24,10 @@ def test_valid_init():
     (5.23, -5.12)
 ])
 def test_valid_init_coordinates(x, y):
-    assert Circle(5, x, y)
+    c1 = Circle(5, x, y)
+    assert c1.radius == 5
+    assert c1.x == x
+    assert c1.y == y
 
 def test_invalid_zero_init():
     with raises(ValueError):
