@@ -52,13 +52,13 @@ class Sphere(Shape3D):
         """
         return 4 * pi * self.radius**2
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Returns a human-readable description of a Sphere object as a string.
         """
         return f"A sphere with radius {self.radius} on position ({self.x}, {self.y}, {self.z})."
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """
         Returns a string representation of a Sphere object.
         """
