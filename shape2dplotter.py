@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 from matplotlib.patches import Rectangle as MplRectangle
 from matplotlib.patches import Circle as MplCircle
 
-class Shape2DPlotter():
+class Shape2DPlotter:
     @staticmethod
     def plot2d(*shapes: Circle | Rectangle) -> tuple[plt.Figure, plt.Axes]:
         for shape in shapes:
@@ -51,7 +51,7 @@ class Shape2DPlotter():
     @staticmethod
     def _get_max_extent(x_limits: tuple[float, float], y_limits: tuple[float, float]) -> float:
         if type(x_limits) is not tuple or type(y_limits) is not tuple:
-            raise TypeError(f"Input must be tuples.")
+            raise TypeError("Input must be tuples.")
 
         if len(x_limits) != 2 or len(y_limits) != 2:
             raise ValueError("Tuple must contain exactly two values.")
