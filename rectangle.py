@@ -3,7 +3,7 @@ from utils import validate_positive_number
 
 class Rectangle(Shape2D):
     """
-    Subclass of Shape for creating rectangles.
+    Subclass of Shape2D for creating rectangles.
     """
     def __init__(self, width: float, height: float, x: float = 0, y: float = 0) -> None:
         """
@@ -78,6 +78,6 @@ class Rectangle(Shape2D):
 
     def __repr__(self) -> str:
         """
-        Returns a Rectangle object and its values as a string.
+        Returns a string representation of a Rectangle object.
         """
         return f"Rectangle({self.width}, {self.height}, {self.x}, {self.y})"

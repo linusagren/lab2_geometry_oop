@@ -6,8 +6,14 @@ from matplotlib.patches import Rectangle as MplRectangle
 from matplotlib.patches import Circle as MplCircle
 
 class Shape2DPlotter:
+    """
+    Uses matplotlib to create plots from Circle and Rectangle objects.
+    """
     @staticmethod
     def plot2d(*shapes: Circle | Rectangle) -> tuple[plt.Figure, plt.Axes]:
+        """
+        Returns fig and axes objects from Circle and Rectangle objects.
+        """
         for shape in shapes:
             if not isinstance(shape, Circle | Rectangle):
                 raise TypeError(f"Shape must be a Circle or Rectangle object, not {type(shape).__name__}")
@@ -50,6 +56,9 @@ class Shape2DPlotter:
 
     @staticmethod
     def _get_max_extent(x_limits: tuple[float, float], y_limits: tuple[float, float]) -> float:
+        """
+        Internal helper method for returning max extent to ensure all shapes are visible inside the plot.
+        """
         if type(x_limits) is not tuple or type(y_limits) is not tuple:
             raise TypeError("Input must be tuples.")
 

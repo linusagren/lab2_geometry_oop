@@ -4,7 +4,7 @@ from utils import validate_positive_number
 
 class Circle(Shape2D):
     """
-    Subclass of Shape for creating circles.
+    Subclass of Shape2D for creating circles.
     """
     def __init__(self, radius: float, x: float = 0, y: float = 0) -> None:
         """
@@ -61,6 +61,6 @@ class Circle(Shape2D):
 
     def __repr__(self) -> str:
         """
-        Returns a Circle object and its values as a string.
+        Returns a string representation of a Circle object.
         """
         return f"Circle({self.radius}, {self.x}, {self.y})"

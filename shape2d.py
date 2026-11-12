@@ -3,6 +3,9 @@ from abc import abstractmethod
 from types import NotImplementedType
 
 class Shape2D(Shape):
+    """
+    Abstract superclass for shared and required properties of the Rectangle and Circle subclasses.
+    """
     @property
     @abstractmethod
     def area(self) -> float:

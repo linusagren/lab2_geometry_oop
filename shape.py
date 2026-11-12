@@ -3,7 +3,7 @@ from utils import validate_number_type
 
 class Shape(ABC):
     """
-    Abstract superclass for shared properties and methods of subclasses.
+    Base class for shared properties and methods of subclasses.
     """
     def __init__(self, x: float = 0, y: float = 0) -> None:
         """
@@ -18,14 +18,14 @@ class Shape(ABC):
     @property
     def x(self) -> float:
         """
-        Get the current x-coordinate.
+        Returns the current x-coordinate of a Shape object.
         """
         return self._x
 
     @property
     def y(self) -> float:
         """
-        Get the current y-coordinate.
+        Returns the current y-coordinate of a Shape object.
         """
         return self._y
 
