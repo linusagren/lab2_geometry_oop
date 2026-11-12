@@ -2,7 +2,6 @@ from pytest import fixture, raises
 from circle import Circle
 from rectangle import Rectangle
 from shape2d import Shape2D
-from math import pi, sqrt
 
 @fixture
 def shapes():
